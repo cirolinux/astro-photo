@@ -5,10 +5,7 @@
 </template>
 
 <script setup>
-  import AstroFoto  from  "/src/components/AstroFoto.vue"
+import AstroFoto from "src/components/AstroFoto.vue";
 </script>
 
-<style lang="scss" scoped>
-
-</style>
- 
+<style lang="scss" scoped></style>
