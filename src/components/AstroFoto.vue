@@ -1,15 +1,19 @@
 <template>
-  <div class="text-h4 text-center">Campionamento planetario</div>
+  <div class="text-h4 text-center">Campionamento Deep Sky</div>
 
   <q-input v-model="dp" type="text" label="Dimensione pixel in micron (dp)" />
 
-  <q-input
-    v-model="f"
-    type="text"
-    label="Lunghezza focale dello strumento in millimetri (F)"
-  />
+  <q-input v-model="f" type="text" label="Lunghezza focale dello strumento in millimetri (F)" />
   <q-input v-model="d" type="text" label="Diametro dello strumento in millimetri (D)" />
   <q-input v-model="λ" type="text" label="Lunghezza d'onda (λ)" />
+  <div class="row">
+    <div class="col-6">
+      <q-input v-model="fwhmMin" type="text" label="fwhm min." />
+    </div>
+    <div class="col-6">
+      <q-input v-model="fwhmMax" type="text" label="fwhm max." />
+    </div>
+  </div>
 
   <!-- POTERE RISOLUTIVO -->
   <q-card class="my-card q-mt-md">
@@ -25,17 +29,12 @@
 
   <!-- CAMPIONAMENTO OTTIMALE -->
   <q-card class="my-card q-mt-md">
-    <q-card-section
-      >Affinchè un dettaglio possa essere risolto correttamente, questo deve ricadere in
+    <q-card-section>Affinchè un dettaglio possa essere risolto correttamente, questo deve ricadere in
       almeno 3 o 4 pixel.
     </q-card-section>
     <q-card-section>
       <div class="text-h6">
-        <q-chip
-          label="Campionamento OTTIMALE (in arcsec/pix)"
-          color="accent"
-          text-color="white"
-        />
+        <q-chip label="Campionamento OTTIMALE (in arcsec/pix)" color="accent" text-color="white" />
         = ({{ cott }} )
       </div>
       <div class="text-h5 text-center">
@@ -48,10 +47,8 @@
   <!-- CAMPIONAMENTO -->
   <q-card class="my-card q-mt-md">
     <q-card-section>
-      <span
-        >La porzione di cielo che un singolo pixel è in grado di rappresentare e quindi il
-        dettaglio più piccolo che siamo in grado di risolvere.</span
-      >
+      <span>La porzione di cielo che un singolo pixel è in grado di rappresentare e quindi il
+        dettaglio più piccolo che siamo in grado di risolvere.</span>
     </q-card-section>
     <q-card-section>
       <div class="text-h6">
@@ -74,11 +71,7 @@
       condizioni di seeing.
     </q-card-section>
     <q-card-section>
-      <q-chip
-        label="focale di campionamento ottimale "
-        color="accent"
-        text-color="white"
-      />
+      <q-chip label="focale di campionamento ottimale " color="accent" text-color="white" />
       = ( Dp x D ) / ( 0.33 x λ )
       <div class="text-h5 text-center">
         <span class="text-bold text-accent"> {{ focale }}</span> mm
@@ -89,17 +82,15 @@
   <q-card class="my-card q-mt-md">
     <q-card-section>
       La grandezza del pixe che dovrebbe avere la tua fotocamera in base alla tua
-      strumentazione
+      strumentazione ed il Seeing
     </q-card-section>
     <q-card-section>
-      <q-chip
-        label="pixel-size ottimale della camera "
-        color="accent"
-        text-color="white"
-      />
-      =( 0.33 x λ ) * F / D
+      <q-chip label="pixel-size ottimale della camera " color="accent" text-color="white" />
+      = (L x C) / 206265
       <div class="text-h5 text-center">
-        <span class="text-bold text-accent"> {{ pixelsize }}</span> µm
+        <span class="text-bold text-accent">
+          {{ pixelsizeMin }} µm - {{ pixelsizeMax }} µm
+        </span>
       </div>
     </q-card-section>
   </q-card>
@@ -112,8 +103,8 @@ const dp = ref(1.45); // DIVISO 1.000
 const f = ref(1000);
 const d = ref(114);
 const λ = ref(550); //= DIVISO 1.000.000
-const fwhmMin = ref(1.5);
-const fwhmMax = ref(2);
+const fwhmMin = ref(2);
+const fwhmMax = ref(4);
 
 //  CAMPIONAMENTO
 const campionamento = computed(() => {
@@ -133,13 +124,21 @@ const cott = computed(() => {
 
 //  FOCALE OTTIMALE
 const focale = computed(() => {
+  return ((d.value * (dp.value / 1000) * 206265) / 37).toFixed(0);
   // return (((d.value * (dp.value / 1000)) / (1.22 * (λ.value / 1000000))) * 3).toFixed(0);
-  return ((d.value * (dp.value / 1000)) / (0.33 * (λ.value / 1000000)) / 10).toFixed(0);
+  return ((d.value * (dp.value / 1000)) / (0.33 * (λ.value / 1000000))).toFixed(0);
 });
 
 //  Pixel Size ottimale per la tua strumentazione
-const pixelsize = computed(() => {
-  return (((f.value * fwhmMin.value) / 206265) * 1000).toFixed(2);
+const pixelsizeMin = computed(() => {
+  // return ((f.value * fwhmMin.value) / 206265).toFixed(2);
+  return ((((f.value * fwhmMin.value) / 206265) * 1000) / 3).toFixed(2);
+});
+const pixelsizeMax = computed(() => {
+  return ((((f.value * fwhmMin.value) / 206265) * 1000) / 2).toFixed(2);
+
+  // return ((f.value * dp.value * (0.33 * λ.value)) / 1000 / 206265).toFixed(2);
+  // return (((f.value * fwhmMin.value) / 206265) * 1000).toFixed(2);
 });
 </script>
 
