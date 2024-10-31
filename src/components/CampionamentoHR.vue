@@ -1,15 +1,59 @@
 <template>
   <div class="text-h4 text-center">Campionamento planetario</div>
   <q-input v-model="dp" type="text" label="Dimensione pixel in micron (dp)" />
-  <q-input v-model="f" type="text" label="Lunghezza focale dello strumento in millimetri (F)" />
+  <q-input
+    v-model="f"
+    type="text"
+    label="Lunghezza focale dello strumento in millimetri (F)"
+  />
   <q-input v-model="d" type="text" label="Diametro dello strumento in millimetri (D)" />
   <q-input v-model="λ" type="text" label="Lunghezza d'onda (λ)" />
 
-  <!-- CAMPIONAMENTO -->
+  <!-- FOCALE RICHIESTA PER TALE STRUMENTO -->
   <q-card class="my-card q-mt-md">
     <q-card-section>
-      <span>La porzione di cielo che un singolo pixel è in grado di rappresentare e quindi il
-        dettaglio più piccolo che siamo in grado di risolvere.</span>
+      La focale ottimale rappresenta la lunghezza focale che è nessarario raggiungere
+      affinchè si possa raggiungere un valore di campionamento ottimale. Questa formula è
+      una stima ottimistica che non tiene conto della qualità dell'ottica o delle
+      condizioni di seeing.
+    </q-card-section>
+    <q-card-section>
+      <q-chip
+        label="focale di campionamento ottimale "
+        color="accent"
+        text-color="white"
+      />
+      = ( Dp x D ) / ( 0.33 x λ )
+      <div class="text-h5 text-center">
+        <span class="text-bold text-accent"> {{ focale.toFixed(0) }}</span> mm
+      </div>
+    </q-card-section>
+  </q-card>
+  <!-- PIXEL SIZE ideale per la fotocamera  -->
+  <q-card class="my-card q-mt-md">
+    <q-card-section>
+      La grandezza del pixe che dovrebbe avere la tua fotocamera in base alla tua
+      strumentazione
+    </q-card-section>
+    <q-card-section>
+      <q-chip
+        label="pixel-size ottimale della camera "
+        color="accent"
+        text-color="white"
+      />
+      =( 0.33 x λ ) * F / D
+      <div class="text-h5 text-center">
+        <span class="text-bold text-accent"> {{ pixelsize.toFixed(2) }}</span> mm
+      </div>
+    </q-card-section>
+  </q-card>
+  <!-- CAMPIONAMENTO -->
+  <q-card class="my-card q-mt-md" v-if="false">
+    <q-card-section>
+      <span
+        >La porzione di cielo che un singolo pixel è in grado di rappresentare e quindi il
+        dettaglio più piccolo che siamo in grado di risolvere.</span
+      >
     </q-card-section>
     <q-card-section>
       <div class="text-h6">
@@ -24,27 +68,20 @@
     </q-card-section>
   </q-card>
 
-  <!-- POTERE RISOLUTIVO -->
-  <q-card class="my-card q-mt-md">
-    <q-card-section> Il dettaglio più piccolo che è possibile risolvere. </q-card-section>
-    <q-card-section>
-      <div class="text-h6">
-        <q-chip label="Potere Risolutivo (in arcsec)" color="accent" text-color="white" />
-        = (120 / D)
-      </div>
-      <div class="text-h5 text-center">{{ pr.toFixed(3) }} arc/secs</div>
-    </q-card-section>
-  </q-card>
-
   <!-- CAMPIONAMENTO OTTIMALE -->
-  <q-card class="my-card q-mt-md">
-    <q-card-section>Affinchè un dettaglio possa essere risolto correttamente, questo deve ricadere in
+  <q-card class="my-card q-mt-md" v-if="false">
+    <q-card-section
+      >Affinchè un dettaglio possa essere risolto correttamente, questo deve ricadere in
       almeno 3 o 4 pixel.
     </q-card-section>
     <q-tooltip> {{ nota }} </q-tooltip>
     <q-card-section>
       <div class="text-h6">
-        <q-chip label="Campionamento OTTIMALE (in arcsec/pix)" color="accent" text-color="white" />
+        <q-chip
+          label="Campionamento OTTIMALE (in arcsec/pix)"
+          color="accent"
+          text-color="white"
+        />
         = ({{ λ }} / D)*0.206265*0.33
       </div>
       <div class="text-h5 text-center">
@@ -54,34 +91,15 @@
     </q-card-section>
   </q-card>
 
-  <!-- FOCALE RICHIESTA PER TALE STRUMENTO -->
-  <q-card class="my-card q-mt-md">
+  <!-- POTERE RISOLUTIVO -->
+  <q-card class="my-card q-mt-md" v-if="false">
+    <q-card-section> Il dettaglio più piccolo che è possibile risolvere. </q-card-section>
     <q-card-section>
-      La focale ottimale rappresenta la lunghezza focale che è nessarario raggiungere
-      affinchè si possa raggiungere un valore di campionamento ottimale. Questa formula è
-      una stima ottimistica che non tiene conto della qualità dell'ottica o delle
-      condizioni di seeing.
-    </q-card-section>
-    <q-card-section>
-      <q-chip label="focale di campionamento ottimale " color="accent" text-color="white" />
-      = ( Dp x D ) / ( 0.33 x λ )
-      <div class="text-h5 text-center">
-        <span class="text-bold text-accent"> {{ focale.toFixed(0) }}</span> mm
+      <div class="text-h6">
+        <q-chip label="Potere Risolutivo (in arcsec)" color="accent" text-color="white" />
+        = (120 / D)
       </div>
-    </q-card-section>
-  </q-card>
-  <!-- PIXEL SIZE ideale per la fotocamera  -->
-  <q-card class="my-card q-mt-md">
-    <q-card-section>
-      La grandezza del pixe che dovrebbe avere la tua fotocamera in base alla tua
-      strumentazione
-    </q-card-section>
-    <q-card-section>
-      <q-chip label="pixel-size ottimale della camera " color="accent" text-color="white" />
-      =( 0.33 x λ ) * F / D
-      <div class="text-h5 text-center">
-        <span class="text-bold text-accent"> {{ pixelsize.toFixed(2) }}</span> mm
-      </div>
+      <div class="text-h5 text-center">{{ pr.toFixed(3) }} arc/secs</div>
     </q-card-section>
   </q-card>
 </template>
