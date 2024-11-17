@@ -7,7 +7,9 @@
     no-data-label="Non ci sono Camere con questi parametri"
     :rows="rows"
     :columns="columns"
+    :pagination="initialPagination"
     row-key="name"
+    dense
   />
 </template>
 
@@ -22,6 +24,13 @@ const store = useCamStore();
 const rows = ref();
 rows.value = LocalStorage.getItem("camere"); //store.fotoCamere;
 console.log(rows.value);
+
+const initialPagination = ref({
+  sortBy: "desc",
+  descending: false,
+  page: 1,
+  rowsPerPage: 50,
+});
 </script>
 
 <style lang="scss" scoped></style>
