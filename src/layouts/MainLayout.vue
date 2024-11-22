@@ -29,6 +29,20 @@ import EssentialLink from "components/EssentialLink.vue";
 
 const linksList = [
   {
+    title: "Riflettori",
+    caption: "Riflettori",
+    icon: "stars",
+    link: "telescope",
+    separator: true,
+  },
+  {
+    title: "Fotocamere",
+    caption: "Camere astronomiche",
+    icon: "stars",
+    link: "camere",
+    separator: true,
+  },
+  {
     title: "Deep Sky",
     caption: "Tipo di camera per il Deep Sky",
     icon: "stars",
