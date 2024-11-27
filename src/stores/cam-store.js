@@ -13,7 +13,7 @@ export const useCamStore = defineStore("fotoCamere", {
       const records = await pb.collection("camera").getFullList({
         expand: "produttore",
         fields:
-          "name, pixelsize, expand.produttore.name, megapixel, risoluzione, chip, diagonale, full_well, qe, noise, fps, adc,",
+          "name, chip, pixelsize, expand.produttore.name, megapixel, formato, risoluzione, chip, diagonale, full_well, qe, noise, fps, adc,",
         sort: "produttore",
       });
       LocalStorage.set("camere", records);
