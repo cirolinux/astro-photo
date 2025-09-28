@@ -1,22 +1,16 @@
 {
-    "editor.bracketPairColorization.enabled": true,
-    "editor.guides.bracketPairs": true,
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.codeActionsOnSave": [
-        "source.fixAll.eslint"
-    ],
-    "eslint.validate": [
-        "javascript",
-        "javascriptreact",
-        "typescript",
-        "vue"
-    ],
-    "vue3snippets.enable-compile-vue-file-on-did-save-code": false,
-    "[vue]": {
-        "editor.defaultFormatter": "Wscats.vue"
-    },
-    "[javascript]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features"
-    }
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": ["source.fixAll.eslint"],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],
+  "vue3snippets.enable-compile-vue-file-on-did-save-code": false,
+  "[vue]": {
+    "editor.defaultFormatter": "Wscats.vue"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "editor.fontSize": 12
 }
