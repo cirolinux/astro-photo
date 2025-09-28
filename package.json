@@ -21,7 +21,7 @@
     "vue-router": "^4.0.0"
   },
   "devDependencies": {
-    "@quasar/app-vite": "^1.0.0",
+    "@quasar/app-vite": "^2.4.0",
     "autoprefixer": "^10.4.2",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.1.0",
@@ -30,8 +30,8 @@
     "prettier": "^2.5.1"
   },
   "engines": {
-    "node": "^20 || ^18 || ^16 || ^14.19",
-    "npm": ">= 6.13.4",
+    "node": "^24 || ^22 || ^18 || ^16",
+    "npm": ">= 11.6.0",
     "yarn": ">= 1.21.1"
   }
 }
